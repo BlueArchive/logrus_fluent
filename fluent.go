@@ -2,7 +2,7 @@ package logrus_fluent
 
 import (
 	"github.com/bluearchive/logrus"
-	"github.com/fluent/fluent-logger-golang/fluent"
+	"github.com/bluearchive/fluent-logger-golang/fluent"
 	"sync"
 	"fmt"
 )
