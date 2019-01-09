@@ -64,6 +64,10 @@ func setMessage(entry *logrus.Entry, data logrus.Fields) {
 	}
 }
 
+func (this *fluentHook) Name() string {
+	return "Fluent"
+}
+
 func (hook *fluentHook) Fire(entry *logrus.Entry) error {
 	// Create a map for passing to FluentD
 	data := make(logrus.Fields)
