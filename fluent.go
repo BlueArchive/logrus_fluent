@@ -21,7 +21,7 @@ var defaultLevels = []logrus.Level{
 	logrus.InfoLevel,
 }
 
-type fluentHook struct {
+type FluentHook struct {
 	config fluent.Config
 	host   string
 	port   int
@@ -31,8 +31,8 @@ type fluentHook struct {
 	logger *fluent.Fluent
 }
 
-func NewHook(config fluent.Config) *fluentHook {
-	return &fluentHook{
+func NewHook(config fluent.Config) *FluentHook {
+	return &FluentHook{
 		config: config,
 		levels: defaultLevels,
 		tag:    nil,
@@ -64,11 +64,11 @@ func setMessage(entry *logrus.Entry, data logrus.Fields) {
 	}
 }
 
-func (this *fluentHook) Name() string {
+func (this *FluentHook) Name() string {
 	return "Fluent"
 }
 
-func (hook *fluentHook) Fire(entry *logrus.Entry) error {
+func (hook *FluentHook) Fire(entry *logrus.Entry) error {
 	// Create a map for passing to FluentD
 	data := make(logrus.Fields)
 	for k, v := range entry.Data {
@@ -77,10 +77,10 @@ func (hook *fluentHook) Fire(entry *logrus.Entry) error {
 
 	setLevelString(entry, data)
 	var tag string
-		tag = *hook.tag
-		if tag != entry.Message {
-			setMessage(entry, data)
-		}
+	tag = *hook.tag
+	if tag != entry.Message {
+		setMessage(entry, data)
+	}
 
 	fluentData := ConvertToValue(data, TagName)
 
@@ -102,18 +102,18 @@ func (hook *fluentHook) Fire(entry *logrus.Entry) error {
 	return err
 }
 
-func (hook *fluentHook) Levels() []logrus.Level {
+func (hook *FluentHook) Levels() []logrus.Level {
 	return hook.levels
 }
 
-func (hook *fluentHook) SetLevels(levels []logrus.Level) {
+func (hook *FluentHook) SetLevels(levels []logrus.Level) {
 	hook.levels = levels
 }
 
-func (hook *fluentHook) Tag() string {
+func (hook *FluentHook) Tag() string {
 	return *hook.tag
 }
 
-func (hook *fluentHook) SetTag(tag string) {
+func (hook *FluentHook) SetTag(tag string) {
 	hook.tag = &tag
 }
