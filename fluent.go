@@ -91,7 +91,7 @@ func (hook *FluentHook) Fire(entry *logrus.Entry) error {
 	// note the connection is not closed; if there's an error using the connection closes itself
 	// and we'll notice that and reconnect on the next Fire. This reproduces this original library's implementation
 	// (ie, a message gets lost)
-	if hook.logger == nil || hook.logger.IsClosed() {
+	if hook.logger == nil {
 		var err error
 		if hook.logger, err = fluent.New(hook.config); err != nil {
 			return err
